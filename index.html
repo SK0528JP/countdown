@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="picture/favicon.png" type="image/x-icon">
+  <title>日付カウントダウンシステム・Flegertec</title>
+  <style>
+    @font-face {
+      font-family: "03SmartFontUI";
+      src: url("font/03SmartFontUI.ttf");
+    }
+    body {
+      font-family: '03SmartFontUI', sans-serif;
+      background-color: #f4f4f4;
+      text-align: center;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    #countdown-container {
+      max-width: 400px;
+      margin: auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background-color: #3498db;
+      color: #fff;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="countdown-container">
+  <h2>日付カウントダウンシステム</h2>
+  <label for="targetDate">指定する日付</label>
+  <input type="date" id="targetDate">
+  <br>
+  <button onclick="calculateCountdown()">残り日数を表示</button>
+  <div id="result"></div>
+</div>
+
+<script>
+  function calculateCountdown() {
+    const targetDateInput = document.getElementById('targetDate');
+    const targetDate = new Date(targetDateInput.value);
+    const currentDate = new Date();
+
+    const timeDifference = targetDate - currentDate;
+
+    if (timeDifference < 0) {
+      alert("Please select a future date.");
+      return;
+    }
+
+    const weekdays = ['日', '月', '火', '水', '木', '金', '土'];
+    const targetDayOfWeek = weekdays[targetDate.getDay()];
+
+    const millisecondsPerDay = 24 * 60 * 60 * 1000;
+    const millisecondsPerMonth = 30 * 24 * 60 * 60 * 1000;
+    const millisecondsPerYear = 365 * 24 * 60 * 60 * 1000;
+
+    const remainingDays = Math.floor(timeDifference / millisecondsPerDay);
+    const remainingMonths = Math.floor(timeDifference / millisecondsPerMonth);
+    const remainingYears = Math.floor(timeDifference / millisecondsPerYear);
+
+    const resultContainer = document.getElementById('result');
+    resultContainer.innerHTML = `
+      残り日数: ${remainingDays}日<br>
+      残り月数: ${remainingMonths}ヶ月<br>
+      残り年数: ${remainingYears}年<br>
+      その日の曜日: ${targetDayOfWeek}曜日
+    `;
+  }
+</script>
+
+</body>
+</html>
